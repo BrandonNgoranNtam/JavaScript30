@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Scoped CSS Variables and JS</title>
   <link rel="icon" href="https://fav.farm/🔥" />
 </head>
+
 <body>
   <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
 
@@ -19,13 +21,28 @@
     <input id="base" type="color" name="base" value="#ffc600">
   </div>
 
-  <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
+  <img src="kakashi-image.jpg" height="500">
 
   <style>
+    :root {
+      --base: #ffc600;
+      --spacing: 20px;
+      --blur: 10px;
+    }
 
     /*
       misc styles, nothing to do with CSS variables
     */
+
+    img {
+      padding: var(--spacing);
+      background: var(--base);
+      filter: blur(var(--blur));
+    }
+
+    .hl {
+      color: var(--base);
+    }
 
     body {
       text-align: center;
@@ -46,7 +63,34 @@
   </style>
 
   <script>
+    const root = document.documentElement;
+
+    const inputs = document.querySelectorAll('.controls input')
+    function handleUpdate() {
+      /*switch (this.name) {
+        case 'spacing':
+          root.style.setProperty('--spacing', this.value + "px");
+          break;
+        case 'blur':
+          root.style.setProperty('--blur', this.value + "px");
+          break;
+        case 'base':
+          root.style.setProperty('--base', this.value);
+          break;
+        default:
+          break;
+      }*/
+      const suffix = this.dataset.sizing || '';
+      root.style.setProperty(`--${this.name}`, this.value + suffix);
+
+    }
+    inputs.forEach(input => input.addEventListener('change', handleUpdate))
+    inputs.forEach(input => input.addEventListener('mousemove', handleUpdate))
+
+
+    console.log(spacingInput)
   </script>
 
 </body>
+
 </html>
